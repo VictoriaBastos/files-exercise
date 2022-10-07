@@ -43,7 +43,7 @@ public class Main {
             Sign sign = new SignFactory().create(MonthDay.of(localDateTime.getMonth(), localDateTime.getDayOfMonth()));
             String risingSign = sign.getRisingSign(localDateTime.toLocalTime());
 
-            Path participantFile = Path.of(USER_DIR, "files", participant.getName().replaceAll(" ", "_"));
+            Path participantFile = Path.of(USER_DIR, "files", participant.getName().replaceAll(" ", "_") + ".txt");
             String info = "Name: " + participant.getName() + "\n" +
                     "Zone: " + participant.getZone() + "\n" +
                     "TimeZone: " + timeZone + "\n" +
