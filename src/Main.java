@@ -6,6 +6,7 @@ import sign.factory.SignFactory;
 import service.SignService;
 
 import java.nio.file.Path;
+import java.sql.SQLOutput;
 import java.time.LocalDateTime;
 import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
@@ -27,13 +28,17 @@ public class Main {
         fileService.write(groupFile, participantService.findAll());
 
         List<String> fileRead = fileService.readLines(groupFile);
-        fileRead.forEach(s -> {
+        //PARALLEL
+        fileRead.stream().parallel().forEach(s -> {
+            //System.out.println("NOME THREAD read: " + Thread.currentThread().getName());
             List<String> list = Arrays.asList(s.split(";"));
             participantService.saveParticipant(new Participant(list.get(0), list.get(1), LocalDateTime.parse(list.get(2), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))));
         });
 
         List<Participant> participants = participantService.getParticipants();
-        participants.forEach(participant -> {
+        // PARALLEL
+        participants.stream().parallel().forEach(participant -> {
+            //System.out.println("NOME THREAD write: " + Thread.currentThread().getName());
             LocalDateTime localDateTime = participant.getDate();
 
             int age = signService.getAge(localDateTime);
