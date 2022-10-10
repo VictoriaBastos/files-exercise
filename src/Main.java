@@ -19,6 +19,8 @@ public class Main {
 
     public static void main(String[] args) {
 
+        var time = System.currentTimeMillis();
+
         FileService fileService = new FileService();
         SignService signService = new SignService();
         ParticipantService participantService = new ParticipantService();
@@ -61,5 +63,6 @@ public class Main {
             fileService.write(participantFile, info);
         });
 
+        System.out.println(System.currentTimeMillis() - time);
     }
 }
