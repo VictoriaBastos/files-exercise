@@ -25,7 +25,8 @@ public class FileService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        List<String> list = lines.collect(Collectors.toList());
+        //PARALLEL
+        List<String> list = lines.parallel().collect(Collectors.toList());
         lines.close();
 
         return list;
